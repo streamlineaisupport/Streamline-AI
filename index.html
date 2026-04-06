@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Streamline AI — Practical AI for Local Businesses</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Syne:wght@700;800&display=swap');
+
+/* ── TOKENS ── */
+:root {
+  --navy:     #0B1F3A;
+  --teal:     #00A8CC;
+  --mint:     #00C896;
+  --offwhite: #F7FAFC;
+  --slate:    #4A6070;
+  --navy-mid: #122848;
+  --navy-lt:  #1a3a5c;
+  --ease:     cubic-bezier(.4,0,.2,1);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--offwhite);
+  color: var(--navy);
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index:100;
+  background: rgba(11,31,58,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,168,204,0.15);
+  padding: 0 5vw;
+  height: 68px;
+  display: flex; align-items:center; justify-content:space-between;
+}
+.nav-logo {
+  display: flex; align-items:center; gap:14px;
+  text-decoration: none;
+}
+.nav-logo svg { width:38px; height:30px; }
+.nav-wordmark {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800; font-size: 1.2rem;
+  color: var(--offwhite); letter-spacing:-0.3px;
+}
+.nav-wordmark span { color: var(--teal); }
+.nav-links {
+  display: flex; align-items:center; gap:2rem;
+  list-style: none;
+}
+.nav-links a {
+  color: rgba(247,250,252,0.7);
+  text-decoration:none; font-size:0.9rem; font-weight:400;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--teal); }
+.nav-cta {
+  background: var(--teal);
+  color: var(--navy) !important;
+  font-weight: 600 !important;
+  padding: 9px 22px;
+  border-radius: 40px;
+  transition: background .2s, transform .2s !important;
+}
+.nav-cta:hover { background: var(--mint) !important; transform: translateY(-1px); }
+
+/* ── SECTIONS ── */
+section { display:none; }
+section.active { display:block; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  background: linear-gradient(145deg, var(--navy) 0%, #0f2d50 60%, var(--navy) 100%);
+  position: relative; overflow:hidden;
+  display:flex; align-items:center;
+  padding: 120px 5vw 80px;
+}
+.hero-grid {
+  position:absolute; inset:0;
+  background-image:
+    linear-gradient(rgba(0,168,204,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,168,204,0.06) 1px, transparent 1px);
+  background-size: 52px 52px;
+  animation: gridDrift 22s linear infinite;
+}
+@keyframes gridDrift { to { background-position: 52px 52px; } }
+.hero-orb-1 {
+  position:absolute; width:600px; height:600px; border-radius:50%;
+  background: radial-gradient(circle, rgba(0,168,204,0.18) 0%, transparent 65%);
+  top:50%; left:-150px; transform:translateY(-50%);
+  animation: breathe 6s ease-in-out infinite;
+}
+.hero-orb-2 {
+  position:absolute; width:400px; height:400px; border-radius:50%;
+  background: radial-gradient(circle, rgba(0,200,150,0.12) 0%, transparent 65%);
+  bottom:-100px; right:5%;
+  animation: breathe 8s ease-in-out infinite reverse;
+}
+@keyframes breathe {
+  0%,100% { transform: translateY(-50%) scale(1); opacity:.8; }
+  50% { transform: translateY(-50%) scale(1.08); opacity:1; }
+}
+.hero-content {
+  position:relative; z-index:2;
+  max-width: 680px;
+  animation: fadeUp .8s var(--ease) both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(30px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  background: rgba(0,168,204,0.12);
+  border: 1px solid rgba(0,168,204,0.3);
+  border-radius:40px; padding:6px 16px; margin-bottom:28px;
+}
+.hero-eyebrow-dot {
+  width:7px; height:7px; border-radius:50%;
+  background: var(--teal);
+  box-shadow: 0 0 8px rgba(0,168,204,0.8);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+.hero-eyebrow span {
+  font-size:.8rem; color: var(--teal); font-weight:500; letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.hero h1 {
+  font-family:'Syne', sans-serif;
+  font-weight:800; font-size: clamp(2.4rem, 5vw, 3.8rem);
+  color: var(--offwhite); line-height:1.1; letter-spacing:-1px;
+  margin-bottom:24px;
+}
+.hero h1 em { color:var(--teal); font-style:normal; }
+.hero h1 .mint { color:var(--mint); }
+.hero-sub {
+  font-size:1.1rem; font-weight:300;
+  color: rgba(247,250,252,0.6);
+  line-height:1.7; margin-bottom:40px; max-width:520px;
+}
+.hero-sub strong { color:var(--offwhite); font-weight:500; }
+.hero-btns { display:flex; gap:16px; flex-wrap:wrap; }
+.btn-primary {
+  background: var(--teal); color: var(--navy);
+  font-weight:600; font-size:.95rem;
+  padding:14px 32px; border-radius:40px;
+  border:none; cursor:pointer; text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px;
+  transition: background .2s, transform .2s;
+}
+.btn-primary:hover { background:var(--mint); transform:translateY(-2px); }
+.btn-secondary {
+  background: transparent;
+  color: var(--offwhite);
+  font-weight:500; font-size:.95rem;
+  padding:14px 32px; border-radius:40px;
+  border:1px solid rgba(247,250,252,0.25);
+  cursor:pointer; text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px;
+  transition: border-color .2s, transform .2s;
+}
+.btn-secondary:hover { border-color:var(--teal); color:var(--teal); transform:translateY(-2px); }
+
+/* Stats bar */
+.stats-bar {
+  background: var(--navy-mid);
+  border-top:1px solid rgba(0,168,204,0.12);
+  border-bottom:1px solid rgba(0,168,204,0.12);
+  padding: 36px 5vw;
+  display:grid; grid-template-columns: repeat(3,1fr);
+  gap:2rem;
+}
+.stat { text-align:center; }
+.stat-num {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:2.2rem; color:var(--teal);
+  display:block; margin-bottom:4px;
+}
+.stat-label {
+  font-size:.85rem; color:rgba(247,250,252,0.5);
+  font-weight:400; line-height:1.4;
+}
+
+/* ── SECTION WRAPPER ── */
+.section-wrap { padding: 90px 5vw; }
+.section-wrap.alt { background: var(--navy); }
+.section-label {
+  display:inline-flex; align-items:center; gap:8px;
+  color:var(--teal); font-size:.8rem; font-weight:600;
+  letter-spacing:1.5px; text-transform:uppercase;
+  margin-bottom:16px;
+}
+.section-label::before {
+  content:''; width:24px; height:2px; background:var(--teal);
+}
+.section-title {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:clamp(1.8rem,3.5vw,2.6rem);
+  line-height:1.15; letter-spacing:-.5px;
+  margin-bottom:16px;
+}
+.section-title.light { color:var(--offwhite); }
+.section-sub {
+  font-size:1rem; font-weight:300;
+  color:var(--slate); line-height:1.7;
+  max-width:560px; margin-bottom:52px;
+}
+.section-sub.light { color:rgba(247,250,252,0.55); }
+
+/* ── HOW IT WORKS ── */
+.steps { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; }
+.step {
+  background: var(--offwhite);
+  border:1px solid rgba(0,168,204,0.12);
+  border-radius:16px; padding:32px 28px;
+  position:relative; overflow:hidden;
+  transition: transform .25s, box-shadow .25s;
+}
+.step:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(0,168,204,0.1); }
+.step::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--teal),var(--mint));
+}
+.step-num {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:2.5rem; color:rgba(0,168,204,0.15);
+  margin-bottom:16px; line-height:1;
+}
+.step h3 { font-size:1.05rem; font-weight:600; margin-bottom:10px; color:var(--navy); }
+.step p { font-size:.9rem; color:var(--slate); line-height:1.65; font-weight:300; }
+
+/* ── SERVICES ── */
+.services-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.5rem; }
+.service-card {
+  background: rgba(247,250,252,0.04);
+  border:1px solid rgba(0,168,204,0.15);
+  border-radius:16px; padding:36px 32px;
+  transition: background .25s, transform .25s;
+  cursor:default;
+}
+.service-card:hover {
+  background: rgba(0,168,204,0.06);
+  transform:translateY(-3px);
+}
+.service-icon {
+  width:48px; height:48px; border-radius:12px;
+  background: rgba(0,168,204,0.12);
+  display:flex; align-items:center; justify-content:center;
+  margin-bottom:20px;
+}
+.service-icon svg { width:24px; height:24px; }
+.service-card h3 {
+  font-family:'Syne',sans-serif; font-weight:700;
+  font-size:1.15rem; color:var(--offwhite); margin-bottom:10px;
+}
+.service-card p {
+  font-size:.9rem; color:rgba(247,250,252,0.55);
+  line-height:1.65; font-weight:300; margin-bottom:20px;
+}
+.service-price {
+  display:inline-block;
+  background: rgba(0,168,204,0.1);
+  border:1px solid rgba(0,168,204,0.25);
+  border-radius:40px; padding:5px 14px;
+  font-size:.8rem; color:var(--teal); font-weight:500;
+}
+
+/* ── INDUSTRIES ── */
+.industries { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; }
+.industry {
+  background:var(--offwhite);
+  border:1px solid rgba(0,168,204,0.1);
+  border-radius:12px; padding:24px 20px;
+  display:flex; align-items:center; gap:14px;
+  transition:transform .2s, border-color .2s;
+}
+.industry:hover { transform:translateY(-2px); border-color:var(--teal); }
+.industry-dot {
+  width:10px; height:10px; border-radius:50%;
+  background:var(--teal); flex-shrink:0;
+}
+.industry span { font-size:.9rem; font-weight:500; color:var(--navy); }
+
+/* ── ABOUT ── */
+.about-grid { display:grid; grid-template-columns:1fr 1fr; gap:5vw; align-items:center; }
+.about-text {}
+.about-text p {
+  font-size:1rem; color:var(--slate); line-height:1.75;
+  font-weight:300; margin-bottom:20px;
+}
+.about-text p strong { color:var(--navy); font-weight:600; }
+.about-values { display:flex; flex-direction:column; gap:16px; margin-top:32px; }
+.value {
+  display:flex; align-items:flex-start; gap:14px;
+  padding:16px 20px;
+  background:rgba(0,168,204,0.05);
+  border-left:3px solid var(--teal);
+  border-radius:0 8px 8px 0;
+}
+.value h4 { font-size:.9rem; font-weight:600; color:var(--navy); margin-bottom:4px; }
+.value p { font-size:.85rem; color:var(--slate); font-weight:300; line-height:1.5; }
+.about-card {
+  background:var(--navy);
+  border-radius:20px; padding:40px 36px;
+  border:1px solid rgba(0,168,204,0.2);
+  position:relative; overflow:hidden;
+}
+.about-card::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--teal),var(--mint));
+}
+.about-card-label {
+  font-size:.75rem; font-weight:600; letter-spacing:1.5px;
+  text-transform:uppercase; color:var(--teal); margin-bottom:20px;
+}
+.about-card h3 {
+  font-family:'Syne',sans-serif; font-weight:800;
+  font-size:1.4rem; color:var(--offwhite);
+  line-height:1.3; margin-bottom:16px;
+}
+.about-card p {
+  font-size:.9rem; color:rgba(247,250,252,0.6);
+  line-height:1.7; font-weight:300; margin-bottom:24px;
+}
+.cred-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
+.cred-list li {
+  display:flex; align-items:center; gap:10px;
+  font-size:.85rem; color:rgba(247,250,252,0.7);
+}
+.cred-list li::before {
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:var(--mint); flex-shrink:0;
+}
+
+/* ── CONTACT ── */
+.contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:5vw; align-items:start; }
+.contact-info {}
+.contact-info p {
+  font-size:1rem; color:rgba(247,250,252,0.6);
+  line-height:1.75; font-weight:300; margin-bottom:32px;
+}
+.contact-methods { display:flex; flex-direction:column; gap:16px; }
+.contact-method {
+  display:flex; align-items:center; gap:14px;
+  padding:16px 20px;
+  background:rgba(0,168,204,0.06);
+  border:1px solid rgba(0,168,204,0.15);
+  border-radius:12px;
+}
+.contact-method-icon {
+  width:40px; height:40px; border-radius:10px;
+  background:rgba(0,168,204,0.12);
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.contact-method h4 { font-size:.85rem; font-weight:600; color:var(--offwhite); margin-bottom:2px; }
+.contact-method p { font-size:.82rem; color:rgba(247,250,252,0.5); margin:0; }
+.contact-form {
+  background:rgba(247,250,252,0.04);
+  border:1px solid rgba(0,168,204,0.15);
+  border-radius:20px; padding:36px 32px;
+}
+.form-row { margin-bottom:20px; }
+.form-row label {
+  display:block; font-size:.82rem; font-weight:500;
+  color:rgba(247,250,252,0.6); margin-bottom:8px;
+  letter-spacing:.3px;
+}
+.form-row input, .form-row select, .form-row textarea {
+  width:100%; padding:12px 16px;
+  background:rgba(247,250,252,0.06);
+  border:1px solid rgba(0,168,204,0.2);
+  border-radius:10px;
+  color:var(--offwhite); font-family:'DM Sans',sans-serif;
+  font-size:.92rem; font-weight:300;
+  outline:none; transition:border-color .2s;
+  appearance:none;
+}
+.form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+  border-color:var(--teal);
+}
+.form-row textarea { height:120px; resize:vertical; }
+.form-row select option { background:var(--navy); color:var(--offwhite); }
+.form-submit {
+  width:100%; padding:14px;
+  background:var(--teal); color:var(--navy);
+  font-family:'DM Sans',sans-serif; font-size:1rem; font-weight:600;
+  border:none; border-radius:40px; cursor:pointer;
+  transition:background .2s, transform .2s;
+}
+.form-submit:hover { background:var(--mint); transform:translateY(-2px); }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--navy);
+  border-top:1px solid rgba(0,168,204,0.12);
+  padding:32px 5vw;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.footer-left { display:flex; align-items:center; gap:12px; }
+.footer-wordmark {
+  font-family:'Syne',sans-serif; font-weight:700;
+  font-size:1rem; color:rgba(247,250,252,0.5);
+}
+.footer-wordmark span { color:var(--teal); }
+.footer-right {
+  font-size:.8rem; color:rgba(247,250,252,0.3);
+}
+
+/* ── MOBILE ── */
+@media(max-width:768px) {
+  .steps, .services-grid, .industries { grid-template-columns:1fr; }
+  .about-grid, .contact-grid { grid-template-columns:1fr; }
+  .hero h1 { font-size:2rem; }
+  .stats-bar { grid-template-columns:1fr; gap:1.5rem; }
+  .nav-links { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#" onclick="showSection('home')">
+    <svg viewBox="0 0 100 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="0"  y="0"  width="46" height="16" rx="8" fill="#00A8CC"/>
+      <rect x="52" y="0"  width="48" height="16" rx="8" fill="#00A8CC" fill-opacity="0.35"/>
+      <rect x="0"  y="28" width="46" height="16" rx="8" fill="#00A8CC"/>
+      <rect x="52" y="28" width="32" height="16" rx="8" fill="#00A8CC" fill-opacity="0.35"/>
+      <rect x="0"  y="56" width="46" height="16" rx="8" fill="#00A8CC"/>
+      <rect x="52" y="56" width="16" height="16" rx="8" fill="#00A8CC" fill-opacity="0.35"/>
+    </svg>
+    <span class="nav-wordmark">Streamline<span> AI</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#" onclick="showSection('home')">Home</a></li>
+    <li><a href="#" onclick="showSection('services')">Services</a></li>
+    <li><a href="#" onclick="showSection('about')">About</a></li>
+    <li><a href="#" onclick="showSection('contact')" class="nav-cta">Book a Free Call</a></li>
+  </ul>
+</nav>
+
+<!-- ════ HOME ════ -->
+<section id="home" class="active">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-orb-1"></div>
+    <div class="hero-orb-2"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-dot"></div>
+        <span>AI Consulting · Teesside & Beyond</span>
+      </div>
+      <h1>Bridging <em>digital tools</em> to <span class="mint">real-world</span> business outcomes.</h1>
+      <p class="hero-sub">
+        You don't need a tech team or a big budget to benefit from AI.
+        <strong>Streamline AI</strong> helps local businesses save time, reduce costs,
+        and win more customers — practically and without the jargon.
+      </p>
+      <div class="hero-btns">
+        <a href="#" class="btn-primary" onclick="showSection('contact')">Book a Free Discovery Call →</a>
+        <a href="#" class="btn-secondary" onclick="showSection('services')">See What's Possible</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat">
+      <span class="stat-num">77%</span>
+      <span class="stat-label">of UK SMEs say AI saves them time every week</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">£13k</span>
+      <span class="stat-label">average annual savings for SMEs adopting AI tools</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4 hrs</span>
+      <span class="stat-label">saved per employee, per week, on average</span>
+    </div>
+  </div>
+
+  <!-- How it works -->
+  <div class="section-wrap">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Simple. Practical. Yours.</h2>
+    <p class="section-sub">Three steps from first conversation to real results — no tech background needed.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Free Discovery Call</h3>
+        <p>We talk through your business, the tasks eating your time, and where AI can genuinely make a difference. No pressure. No jargon.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Custom AI Plan</h3>
+        <p>I build a focused plan — the right tools, set up the right way, for your specific business. Not a generic template. Your business.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Setup, Train & Support</h3>
+        <p>I handle the tech, train you and your team hands-on, and stay on hand as your business grows. You own it. I support it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Industries -->
+  <div class="section-wrap" style="padding-top:0">
+    <div class="section-label">Industries</div>
+    <h2 class="section-title">Built for businesses like yours</h2>
+    <p class="section-sub">AI isn't one-size-fits-all. I work across a range of local business types — each with their own specific use cases.</p>
+    <div class="industries">
+      <div class="industry"><div class="industry-dot"></div><span>Restaurants & Hospitality</span></div>
+      <div class="industry"><div class="industry-dot"></div><span>Retail & E-commerce</span></div>
+      <div class="industry"><div class="industry-dot"></div><span>Trades & Services</span></div>
+      <div class="industry"><div class="industry-dot"></div><span>Health & Wellness</span></div>
+      <div class="industry"><div class="industry-dot"></div><span>Professional Services</span></div>
+      <div class="industry"><div class="industry-dot"></div><span>Property & Letting</span></div>
+      <div class="industry"><div class="industry-dot"></div><span>Occupational Health</span></div>
+      <div class="industry"><div class="industry-dot"></div><span>Salons & Beauty</span></div>
+      <div class="industry"><div class="industry-dot"></div><span>Gyms & Fitness</span></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ════ SERVICES ════ -->
+<section id="services">
+  <div class="section-wrap alt" style="padding-top:120px; min-height:100vh;">
+    <div class="section-label">Services</div>
+    <h2 class="section-title light">Everything you need to get AI working for you</h2>
+    <p class="section-sub light">Clear packages. No hidden fees. Real results.</p>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#00A8CC" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+          </svg>
+        </div>
+        <h3>AI Starter Audit</h3>
+        <p>A 90-minute deep dive into your business. I identify your top three AI opportunities, show you exactly what's possible, and leave you with a clear action plan — even if you never work with me again.</p>
+        <span class="service-price">From £150</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#00A8CC" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <h3>Quick Win Setup</h3>
+        <p>One high-impact AI tool identified, configured, and implemented for your business. Includes a hands-on training session so you and your team can use it confidently from day one.</p>
+        <span class="service-price">From £300</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#00A8CC" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+          </svg>
+        </div>
+        <h3>AI Foundation Pack</h3>
+        <p>A complete AI setup across your core business functions — content, customer communications, and admin. Includes full training and 30 days of hands-on support to make sure it sticks.</p>
+        <span class="service-price">From £1,500</span>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#00A8CC" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+          </svg>
+        </div>
+        <h3>Monthly Retainer</h3>
+        <p>Ongoing partnership — new tools as they emerge, continued training, performance check-ins, and a trusted partner who knows your business as AI keeps evolving.</p>
+        <span class="service-price">From £300/mo</span>
+      </div>
+
+    </div>
+
+    <div style="margin-top:60px; padding:36px; background:rgba(0,168,204,0.06); border:1px solid rgba(0,168,204,0.2); border-radius:16px; text-align:center;">
+      <p style="color:rgba(247,250,252,0.6); font-size:.95rem; margin-bottom:20px;">
+        Not sure which is right for you? Every engagement starts with a free 30-minute discovery call.
+      </p>
+      <a href="#" class="btn-primary" onclick="showSection('contact')">Book Your Free Call →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════ ABOUT ════ -->
+<section id="about">
+  <div class="section-wrap" style="padding-top:120px; min-height:100vh;">
+    <div class="section-label">About</div>
+    <h2 class="section-title">Enterprise thinking. Local heart.</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I started Streamline AI because I kept seeing <strong>brilliant local businesses leave time and money on the table</strong> — not through lack of effort, but because no one had shown them what was possible.</p>
+        <p>Before this, I spent four years managing multi-million dollar accounts for some of the world's biggest brands — <strong>Amazon, Starbucks, Samsung, and The R&A</strong> — translating complex strategy into measurable commercial results across digital and physical channels.</p>
+        <p>That experience taught me one thing above all else: the gap between a good idea and a real-world result is almost always a people problem, not a technology problem. <strong>My job is to close that gap.</strong></p>
+        <div class="about-values">
+          <div class="value">
+            <div>
+              <h4>Practical over flashy</h4>
+              <p>I only recommend tools that will genuinely save you time or make you money. No tech for tech's sake.</p>
+            </div>
+          </div>
+          <div class="value">
+            <div>
+              <h4>You own it</h4>
+              <p>I train you to use every tool I set up. You should never need me just to keep the lights on.</p>
+            </div>
+          </div>
+          <div class="value">
+            <div>
+              <h4>Honest always</h4>
+              <p>If AI can't help with something, I'll tell you. Trust is the only thing that matters long term.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-label">Background & Credentials</div>
+        <h3>4+ years delivering results for global brands</h3>
+        <p>Now bringing that same commercial rigour to local businesses across Teesside and beyond.</p>
+        <ul class="cred-list">
+          <li>Strategic Account Manager — The Gang (global creative agency)</li>
+          <li>Amazon — 15x cost efficiency vs TikTok, 170M+ impressions</li>
+          <li>Starbucks APAC — 75,000+ mobile app redemptions via O2O strategy</li>
+          <li>Dettol — Cannes Lions nominated Roblox campaign, 15M+ visits</li>
+          <li>Topgolf Thailand — 49% new customer acquisition rate</li>
+          <li>Founder, Streamline AI · Teesside · 2026</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CONTACT ════ -->
+<section id="contact">
+  <div class="section-wrap alt" style="padding-top:120px; min-height:100vh;">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title light">Let's talk about your business</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p>The best place to start is a free 30-minute discovery call. No pitch, no pressure — just an honest conversation about where AI could make a real difference for you.</p>
+        <div class="contact-methods">
+          <div class="contact-method">
+            <div class="contact-method-icon">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#00A8CC" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Email</h4>
+              <p>streamlineaisupport@gmail.com</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="contact-method-icon">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#00A8CC" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Based in</h4>
+              <p>Teesside, UK · Working nationwide</p>
+            </div>
+          </div>
+          <div class="contact-method">
+            <div class="contact-method-icon">
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#00A8CC" stroke-width="1.8">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+            </div>
+            <div>
+              <h4>Response time</h4>
+              <p>Within one working day</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form">
+        <div class="form-row">
+          <label>Your name</label>
+          <input type="text" placeholder="e.g. Sarah Johnson">
+        </div>
+        <div class="form-row">
+          <label>Email address</label>
+          <input type="email" placeholder="sarah@yourbusiness.com">
+        </div>
+        <div class="form-row">
+          <label>Business type</label>
+          <select>
+            <option value="">Select your industry...</option>
+            <option>Restaurant / Hospitality</option>
+            <option>Retail / E-commerce</option>
+            <option>Trades & Services</option>
+            <option>Health & Wellness</option>
+            <option>Professional Services</option>
+            <option>Property & Letting</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>What's your biggest time drain right now?</label>
+          <textarea placeholder="e.g. Responding to customer enquiries, writing social media posts, chasing invoices..."></textarea>
+        </div>
+        <button class="form-submit">Send Message →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <svg width="32" height="24" viewBox="0 0 100 72" fill="none">
+      <rect x="0"  y="0"  width="46" height="16" rx="8" fill="#00A8CC"/>
+      <rect x="52" y="0"  width="48" height="16" rx="8" fill="#00A8CC" fill-opacity="0.35"/>
+      <rect x="0"  y="28" width="46" height="16" rx="8" fill="#00A8CC"/>
+      <rect x="52" y="28" width="32" height="16" rx="8" fill="#00A8CC" fill-opacity="0.35"/>
+      <rect x="0"  y="56" width="46" height="16" rx="8" fill="#00A8CC"/>
+      <rect x="52" y="56" width="16" height="16" rx="8" fill="#00A8CC" fill-opacity="0.35"/>
+    </svg>
+    <span class="footer-wordmark">Streamline<span> AI</span></span>
+  </div>
+  <div class="footer-right">© 2026 Streamline AI · streamlineaisupport@gmail.com</div>
+</footer>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
